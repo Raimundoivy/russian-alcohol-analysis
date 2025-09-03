@@ -60,7 +60,7 @@ To run this analysis on your local machine, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/russian_alcohol_consumption_analysis.git
+    git clone https://github.com/Raimundoivy/russian-alcohol-analysis
     cd russian_alcohol_consumption_analysis
     ```
 
