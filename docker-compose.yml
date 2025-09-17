@@ -2,10 +2,14 @@ services:
   analysis:
     build: .
     container_name: alcohol_analysis_dashboard
-    # Map port 8501 (Streamlit's default port) on your local machine
     ports:
       - "8501:8501"
     volumes:
       - .:/app
-    # Change the command to run the Streamlit dashboard
+    
+    # --- ADD THIS BLOCK ---
+    # This tells Python to look for modules in the /app directory
+    environment:
+      - PYTHONPATH=/app
+
     command: streamlit run dashboard.py
