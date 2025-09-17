@@ -1,0 +1,11 @@
+services:
+  analysis:
+    build: .
+    container_name: alcohol_analysis_dashboard
+    # Map port 8501 (Streamlit's default port) on your local machine
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    # Change the command to run the Streamlit dashboard
+    command: streamlit run dashboard.py
