@@ -1,39 +1,45 @@
 import pandas as pd
+from pandas import DataFrame
 
-def load_and_prepare_data(filepath="Consumption of alcoholic beverages in Russia 1998-2023.csv"):
+
+def load_and_prepare_data(
+    filepath: str = "Consumption of alcoholic beverages in Russia 1998-2023.csv",
+) -> DataFrame:
     """
     Loads the alcohol consumption data from a CSV file and prepares it for analysis.
+
+    Args:
+        filepath (str, optional): The path to the CSV file. Defaults to "Consumption of alcoholic beverages in Russia 1998-2023.csv".
+
+    Returns:
+        DataFrame: A pandas DataFrame with the prepared data.
     """
     df = pd.read_csv(filepath)
-    
-    # Use the correct capitalized column name 'Year'
-    df['Year'] = pd.to_datetime(df['Year'], format='%Y')
-    df.set_index('Year', inplace=True)
 
-    # Pivot the table to get beverage types as columns
+    df["Year"] = pd.to_datetime(df["Year"], format="%Y")
+    df.set_index("Year", inplace=True)
+
     df_pivot = df.pivot_table(
-        index=df.index, 
-        columns='Type', 
-        values='Consumption of alcoholic beverages (in liters per capita)'
+        index=df.index,
+        columns="Type",
+        values="Consumption of alcoholic beverages (in liters per capita)",
     )
 
-    # --- FIX: Implement a more robust column cleaning method ---
-    # Create a mapping for desired column names
     column_rename_map = {
-        'Wine': 'wine',
-        'Beer and Сider': 'beer',
-        'Vodka and Liqueurs': 'vodka',
-        'Brandy': 'brandy'
+        "Wine": "wine",
+        "Beer and Сider": "beer",
+        "Vodka and Liqueurs": "vodka",
+        "Brandy": "brandy",
     }
     df_pivot.rename(columns=column_rename_map, inplace=True)
-    
-    # Select only the columns we need for the analysis
-    final_df = df_pivot[['wine', 'beer', 'vodka', 'brandy']]
 
-    # Ensure all data is numeric and handle any potential errors
+    # Explicitly create a copy to avoid SettingWithCopyWarning
+    final_df = df_pivot[["wine", "beer", "vodka", "brandy"]].copy()
+
+    # Use .loc to safely modify the DataFrame
     for col in final_df.columns:
-        final_df[col] = pd.to_numeric(final_df[col], errors='coerce')
-        
+        final_df.loc[:, col] = pd.to_numeric(final_df[col], errors="coerce")
+
     final_df.dropna(inplace=True)
-    
-    return final_df.copy()
+
+    return final_df

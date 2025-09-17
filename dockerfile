@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copy the requirements file first to leverage Docker's build cache
 COPY requirements.txt .
-
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 

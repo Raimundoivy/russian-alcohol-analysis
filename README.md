@@ -1,67 +1,55 @@
 # **Russian Alcohol Consumption Analysis (1998-2023)**
 
-This project provides an in-depth analysis of alcohol consumption trends in Russia from 1998 to 2023. Using time series analysis, it explores the relationships between the consumption of different alcoholic beverages and forecasts future trends.
+## **Introduction: Business Problem**
+
+This project provides an in-depth analysis of alcohol consumption trends in Russia from 1998 to 2023. The primary goal of this analysis is to understand the dynamics of alcohol consumption in Russia and to build a forecasting model to predict future trends. This can provide insights into public health, economic factors, and cultural shifts over time. From a business perspective, this analysis could be valuable for a beverage company looking to optimize its product portfolio and forecast demand in the Russian market. Similarly, a public health organization could use these findings to monitor consumption trends and inform policy decisions.
+
+## **Data Source**
+
+The dataset used in this analysis is publicly available on Kaggle. It contains yearly per capita consumption data for various alcoholic beverages in Russia from 1998 to 2023.
+
+* **Source**: [Russian Alcohol Consumption and Deaths](https://www.kaggle.com/datasets/raimundoivy/russian-alcohol-consumption-and-deaths)
+* **File**: `Consumption of alcoholic beverages in Russia 1998-2023.csv`
 
 ## **Key Visualizations**
 
 ### **Consumption Forecast**
 
-The following chart displays the historical consumption of various alcoholic beverages, along with a forecast for the next five years based on a VAR model.
-
 ![Consumption Forecast](consumption_forecast.png)
 
 ### **Correlation Heatmap**
-
-This heatmap illustrates the correlations in the annual changes of consumption between different types of alcohol.
 
 ![Correlation Heatmap](correlation_heatmap.png)
 
 ### **Backtesting and Validation**
 
-The model's performance was validated by training on data up to 2019 and testing against the actuals from 2020-2023.
-
 ![Backtesting Validation](backtesting_validation_plot.png)
 
 ## **Methodology**
 
-The analysis is conducted in the `russian_alcohol_consumption_analysis.ipynb` notebook and follows these key steps:
+The analysis is conducted in the `main.py` script and follows these key steps:
 
 1.  **Data Preprocessing**: The dataset is loaded, cleaned, and transformed from a long to a wide format.
-2.  **Stationarity Testing**: The Augmented Dickey-Fuller (ADF) test is used to check for stationarity in the time series data. Non-stationary series are treated with first-order differencing.
+2.  **Stationarity Testing**: The Augmented Dickey-Fuller (ADF) test is used to check for stationarity.
 3.  **Vector Autoregression (VAR) Model**:
-    *   **Granger Causality**: To test for causal relationships between beverage consumption.
-    *   **Forecasting**: A VAR model is fitted to the data to forecast future consumption.
-    *   **Impulse Response Function (IRF)**: To analyze how a shock in one variable affects others.
+    * **Model Selection**: The optimal lag order is determined using AIC and BIC.
+    * **Forecasting**: A VAR model is fitted to forecast future consumption.
+    * **Impulse Response Function (IRF)**: To analyze how a shock in one variable affects others.
 4.  **VARMAX Model**: The analysis is extended with a VARMAX model to include the COVID-19 pandemic as an exogenous variable.
-
-## **Repository Structure**
-
-```
-.
-├── Consumption of alcoholic beverages in Russia 1998-2023.csv # The raw dataset
-├── russian_alcohol_consumption_analysis.ipynb              # Jupyter Notebook with the complete analysis
-├── requirements.txt                                          # Python dependencies
-├── backtesting_validation_plot.png                           # Output: Backtesting validation plot
-├── consumption_forecast.png                                  # Output: Consumption forecast plot
-├── correlation_heatmap.png                                   # Output: Correlation heatmap
-└── impulse_response_functions_adjusted.png                   # Output: Impulse Response Function plot
-```
 
 ## **Getting Started**
 
-To run this analysis on your local machine, follow these steps:
-
 ### **Prerequisites**
 
-*   Python 3.x
-*   pip
+* Python 3.x
+* pip
 
 ### **Installation**
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Raimundoivy/russian-alcohol-analysis
-    cd russian_alcohol_consumption_analysis
+    git clone [https://github.com/Raimundoivy/russian-alcohol-analysis](https://github.com/Raimundoivy/russian-alcohol-analysis)
+    cd russian-alcohol-analysis
     ```
 
 2.  **Create and activate a virtual environment (recommended):**
@@ -75,16 +63,9 @@ To run this analysis on your local machine, follow these steps:
     pip install -r requirements.txt
     ```
 
-4.  **Launch Jupyter Notebook:**
-    ```bash
-    jupyter notebook
-    ```
+### **Running the Analysis**
 
-    Now you can open and run the `russian_alcohol_consumption_analysis.ipynb` notebook.
+To run the complete analysis pipeline, execute the `main.py` script:
 
-## **Future Work**
-
-*   **Incorporate External Factors**: Enhance the model by including economic indicators (GDP, inflation), demographic data, or public health policies.
-*   **Explore Alternative Models**: Experiment with other time series models like SARIMA or machine learning models like LSTMs.
-*   **Regional Analysis**: If regional data is available, conduct a more granular analysis of consumption patterns across Russia.
-*   **Interactive Dashboard**: Create an interactive dashboard with Plotly/Dash to visualize the results.
+```bash
+python main.py
